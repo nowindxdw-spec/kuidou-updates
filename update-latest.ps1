@@ -23,6 +23,7 @@ if (-not $SourceDir) {
             $px = ($ie.ProxyServer -split ';')[0]
             if ($px -notmatch '^https?://') { $px = 'http://' + $px }
             [Net.WebRequest]::DefaultWebProxy = New-Object Net.WebProxy($px, $true)
+            $env:HTTP_PROXY = $px; $env:HTTPS_PROXY = $px # curl.exe 下载走环境变量
         }
     } catch {}
     [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
